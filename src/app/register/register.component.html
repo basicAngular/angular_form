@@ -1,0 +1,49 @@
+<div class="container">
+	<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+		<legend>Form Title</legend>
+
+		<div class="form-group">
+			<label for="Name">Name</label>
+			<input type="text" formControlName="name" class="form-control" placeholder="Enter Name...">
+			<span *ngIf="!registerForm.get('name').valid && registerForm.get('name').touched">Please Enter You name</span>
+		</div>
+		<div class="radio" *ngFor="let gender of genders">
+			<label><input formControlName="gender" type="radio" [value]="gender"> {{gender}}</label>
+		</div>
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="text" formControlName="email" class="form-control" placeholder="Please enter your email id">
+			<span *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">Please select valid email id.</span>
+		</div>
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text" formControlName="username" class="form-control" placeholder="Enter Username...">
+			<span *ngIf="!registerForm.get('username').valid && registerForm.get('name').touched">
+				<span *ngIf="registerForm.get('username').errors['nameIsForbidden']">This name is invalid</span>
+				<span *ngIf="registerForm.get('username').errors['required']">This name is Required field</span>
+			</span>
+		</div>
+		<div class="form-group">
+			<label for="contact">Contact</label>
+			<input type="text" formControlName="contact" class="form-control" placeholder="Contact number">
+			<span *ngIf="!registerForm.get('contact').valid && registerForm.get('contact').touched">Please enter contact number</span>
+		</div>
+		<div class="form-group">
+			<label for="address">Address</label>
+			<input type="text" formControlName="address" class="form-control" placeholder="Enter Address">
+		</div>
+		<div class="form-group">
+			<label for="city">City</label>
+			<input type="text" formControlName="city" class="form-control" placeholder="Enter City">
+		</div>
+		<div formArrayName="hobbies">
+			<h4>Your hobbies</h4>
+			<button type="button" class="btn btn-default" (click)="onAddHobby()">Add Hobby</button>
+			<div class="form-group" *ngFor="let hobbyControl of registerForm.get('hobbies').controls; let i = index">
+				<input type="text" class="form-control" [formControlName]="i">
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
